@@ -111,8 +111,14 @@ class Probe:
 
         if self.status:
             self.status = Status(**self.status)
+        else:
+            self.status = Status()
+
         if self.geometry:
             self.geometry = Geometry(**self.geometry)
+        else:
+            self.geometry = Geometry()
+
         self.tags = [Tag(t[u'name'], t[u'slug']) for t in self.tags]
 
 
