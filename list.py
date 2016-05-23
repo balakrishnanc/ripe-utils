@@ -166,6 +166,7 @@ def main(args):
                 u",<anchor?>,<public?>,<last_connect>"
                 u",<status>,<status_ts>,<tags>\n")
 
+        n = 0
         for p in get_probes():
             f.write(u"%s\n" %
                     COL_SEP.join(str(v) for v in
@@ -185,6 +186,11 @@ def main(args):
                                   p.status.name.upper(),
                                   p.status_since,
                                   TAG_SEP.join(t.slug for t in p.tags))))
+
+            n += 1
+            if not n % PAGE_SZ:
+                print("- #probes: %d" % (n))
+        print("- fetched details of %d probes." % (n))
 
 
 def __get_parser():
