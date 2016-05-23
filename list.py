@@ -162,7 +162,8 @@ def main(args):
         # Header.
         f.write(u"#<id>,<asn_v4>,<address_v4>,<pfx_v4>"
                 u",<asn_v6>,<address_v6>,<pfx_v6>"
-                u",<country>,<anchor?>,<public?>,<last_connect>"
+                u",<country>,<lat>,<lng>"
+                u",<anchor?>,<public?>,<last_connect>"
                 u",<status>,<status_ts>,<tags>\n")
 
         for p in get_probes():
@@ -176,6 +177,8 @@ def main(args):
                                   p.address_v6,
                                   p.prefix_v6,
                                   p.country_code,
+                                  p.geometry.coordinates.lat,
+                                  p.geometry.coordinates.lng,
                                   1 if p.is_anchor else 0,
                                   1 if p.is_public else 0,
                                   p.last_connected,
