@@ -74,6 +74,8 @@ class Geometry:
 
         if self.coordinates:
             self.coordinates = Point(*self.coordinates)
+        else:
+            self.coordinates = Point(-1111.0, -1111.0)
 
 
 class Probe:
