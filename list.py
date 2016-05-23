@@ -25,6 +25,10 @@ import requests
 API_ROOT = u'https://atlas.ripe.net/api/v2'
 API_PROBES = API_ROOT + u'/probes/'
 
+# Number of objects per size.
+# NOTE: API does not allow more than 500 objects per page.
+PAGE_SZ = 500
+
 
 # Delimiters.
 COL_SEP = u','
@@ -132,7 +136,8 @@ def get_probe_data(results):
 def get_probes():
     """Retrieve all RIPE Atlas probes.
     """
-    r = requests.get(API_PROBES, params={u'page_size' : 500, u'sort' : u'id'})
+    r = requests.get(API_PROBES,
+                     params={u'page_size' : PAGE_SZ, u'sort' : u'id'})
     while True:
         if not r.status_code == requests.codes.ok:
             r.raise_for_status()
