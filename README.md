@@ -22,3 +22,10 @@ optional arguments:
   -o output, --output output
                         Relative/absolute path of output file.
 ```
+
+
+## Example
+
+```
+$ ./list.py -o "atlas-probes-`date +%Y%m%d.txt`"
+```
