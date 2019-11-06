@@ -102,6 +102,7 @@ class Probe:
                  'status',
                  'status_since',
                  'tags',
+                 'total_uptime',
                  'type'}
 
     def __init__(self, **kwargs):
