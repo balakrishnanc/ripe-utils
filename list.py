@@ -22,8 +22,8 @@ import io
 import requests
 
 
-API_ROOT = u'https://atlas.ripe.net/api/v2'
-API_PROBES = API_ROOT + u'/probes/'
+API_ROOT = 'https://atlas.ripe.net/api/v2'
+API_PROBES = API_ROOT + '/probes/'
 
 # Number of objects per size.
 # NOTE: API does not allow more than 500 objects per page.
@@ -31,12 +31,12 @@ PAGE_SZ = 500
 
 
 # Delimiters.
-COL_SEP = u','
-TAG_SEP = u'+'
+COL_SEP = ','
+TAG_SEP = '+'
 
 
 class Tag:
-    __slots__ = (u'name', u'slug')
+    __slots__ = ('name', 'slug')
 
     def __init__(self, name, slug):
         self.name = name
@@ -44,7 +44,7 @@ class Tag:
 
 
 class Status:
-    __slots__ = (u'since', u'id', u'name')
+    __slots__ = ('since', 'id', 'name')
 
 
     def __init__(self, **kwargs):
@@ -58,7 +58,7 @@ class Status:
 class Point:
     """Latitude-longitude coordinate.
     """
-    __slots__ = (u'x', u'y', u'lat', u'lng')
+    __slots__ = ('x', 'y', 'lat', 'lng')
 
     def __init__(self, *coords):
         self.x, self.y = coords
@@ -66,7 +66,7 @@ class Point:
 
 
 class Geometry:
-    __slots__ = (u'coordinates', u'type')
+    __slots__ = ('coordinates', 'type')
 
 
     def __init__(self, **kwargs):
@@ -85,24 +85,24 @@ class Geometry:
 class Probe:
     """RIPE Atlas Probe.
     """
-    __slots__ = {u'address_v4',
-                 u'address_v6',
-                 u'asn_v4',
-                 u'asn_v6',
-                 u'country_code',
-                 u'description',
-                 u'first_connected',
-                 u'geometry',
-                 u'id',
-                 u'is_anchor',
-                 u'is_public',
-                 u'last_connected',
-                 u'prefix_v4',
-                 u'prefix_v6',
-                 u'status',
-                 u'status_since',
-                 u'tags',
-                 u'type'}
+    __slots__ = {'address_v4',
+                 'address_v6',
+                 'asn_v4',
+                 'asn_v6',
+                 'country_code',
+                 'description',
+                 'first_connected',
+                 'geometry',
+                 'id',
+                 'is_anchor',
+                 'is_public',
+                 'last_connected',
+                 'prefix_v4',
+                 'prefix_v6',
+                 'status',
+                 'status_since',
+                 'tags',
+                 'type'}
 
     def __init__(self, **kwargs):
         """Initialize Probe using the given data.
@@ -123,7 +123,7 @@ class Probe:
         else:
             self.geometry = Geometry()
 
-        self.tags = [Tag(t[u'name'], t[u'slug']) for t in self.tags]
+        self.tags = [Tag(t['name'], t['slug']) for t in self.tags]
 
 
 def get_probe_data(results):
@@ -137,19 +137,19 @@ def get_probes():
     """Retrieve all RIPE Atlas probes.
     """
     r = requests.get(API_PROBES,
-                     params={u'page_size' : PAGE_SZ, u'sort' : u'id'})
+                     params={'page_size' : PAGE_SZ, 'sort' : 'id'})
     while True:
         if not r.status_code == requests.codes.ok:
             r.raise_for_status()
 
         data = r.json()
-        count = data[u'count']
-        url = data[u'next']
+        count = data['count']
+        url = data['next']
 
         if not count:
             break
 
-        yield from get_probe_data(data[u'results'])
+        yield from get_probe_data(data['results'])
 
         if not url:
             break
